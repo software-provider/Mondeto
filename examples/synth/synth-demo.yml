@@ -1,0 +1,327 @@
+world:
+  skyboxTexture: !load_file "background.png"
+objects:
+  # Light
+  # Use an angled directional light as the sun
+  #   https://docs.unity3d.com/ja/2019.4/Manual/UsingLights.html
+  - position: !vec [10, 10, 10]
+    rotation: !euler [70, 0, 0]
+    color: !vec [1, 1, 1]
+    lightType: directional
+    tags: [light]
+  # Ground
+  - position: !vec [0, 0, 0]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [20, 1, 20]
+    color: !vec [0.3, 0.3, 0.3]
+    isTangible: true
+    isStatic: true
+    tags: [plane, material, collider]
+  # Oscillator waveform display
+  - $name: oscWaveformPlot
+    position: !vec [-0.35, 1.5, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.3, 0.2, 1.0]
+    width: 0.01
+    points: []
+    maxValue: 1.0
+    minValue: -1.0
+    color: !vec [0, 1, 0]
+    shader: unlit
+    tags: [line, material]
+    codes: [!load_file "plot.wasm"]
+  # Filter frequency response display
+  - $name: filterPlot
+    position: !vec [0.0, 1.5, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.3, 0.2, 1.0]
+    width: 0.01
+    points: []
+    maxValue: 0.0
+    minValue: -60.0
+    color: !vec [0, 1, 0]
+    shader: unlit
+    tags: [line, material]
+    codes: [!load_file "plot.wasm"]
+  # Envelope display
+  - $name: envelopePlot
+    position: !vec [0.35, 1.5, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.3, 0.2, 1.0]
+    width: 0.01
+    points: []
+    maxValue: 1.0
+    minValue: 0.0
+    color: !vec [0, 1, 0]
+    shader: unlit
+    tags: [line, material]
+    codes: [!load_file "plot.wasm"]
+  # Waveform visualizer
+  - $name: visualizerPlot
+    position: !vec [-5.0, 0.0, 5.0]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [10, 6, 1]
+    width: 0.03
+    points: []
+    maxValue: 1.0
+    minValue: -1.0
+    color: !vec [0, 1, 0]
+    shader: unlit
+    tags: [line, material]
+    codes: [!load_file "plot.wasm"]
+  # Waveform visualizer 2
+  - $name: visualizerPlot2
+    position: !vec [5.0, 0.0, -5.0]
+    rotation: !euler [0, 180, 0]
+    scale: !vec [10, 6, 1]
+    width: 0.03
+    points: []
+    maxValue: 1.0
+    minValue: -1.0
+    color: !vec [0, 1, 0]
+    shader: unlit
+    tags: [line, material]
+    codes: [!load_file "plot.wasm"]
+  # Synth object
+  - $name: synth
+    position: !vec [0, 1, 2]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.3, 0.3, 0.3]
+    oscWaveformPlot: !ref oscWaveformPlot
+    filterPlot: !ref filterPlot
+    envelopePlot: !ref envelopePlot
+    visualizerPlot: !ref visualizerPlot
+    visualizerPlot2: !ref visualizerPlot2
+    tags: [cube, audioSource, midiInput]  # midiInput for handling input from a MIDI device
+    codes: [!load_file "synth.wasm"]
+  # Keyboard
+  # noteNum is MIDI note number. See: http://newt.phys.unsw.edu.au/jw/notes.html
+  # C
+  - position: !vec [0, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 60
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # C#
+  - position: !vec [0.055, 1.05, 1.575]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.04, 0.15]
+    color: !vec [0, 0, 0]
+    noteNum: 61
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # D
+  - position: !vec [0.11, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 62
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # D#
+  - position: !vec [0.165, 1.05, 1.575]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.04, 0.15]
+    color: !vec [0, 0, 0]
+    noteNum: 63
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # E
+  - position: !vec [0.22, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 64
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # F
+  - position: !vec [0.33, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 65
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # F#
+  - position: !vec [0.385, 1.05, 1.575]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.04, 0.15]
+    color: !vec [0, 0, 0]
+    noteNum: 66
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # G
+  - position: !vec [0.44, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 67
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # G#
+  - position: !vec [0.495, 1.05, 1.575]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.04, 0.15]
+    color: !vec [0, 0, 0]
+    noteNum: 68
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # A
+  - position: !vec [0.55, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 69
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # A#
+  - position: !vec [0.605, 1.05, 1.575]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.04, 0.15]
+    color: !vec [0, 0, 0]
+    noteNum: 70
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # B
+  - position: !vec [0.66, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 71
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # C
+  - position: !vec [0.77, 1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.05, 0.3]
+    color: !vec [1, 1, 1]
+    noteNum: 72
+    target: !ref synth
+    tags: [cube, material, collider]
+    codes: [!load_file "key.wasm"]
+  # Controls
+  # Waveform change button
+  - position: !vec [-0.85, 1.7, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.3, 0.1, 0.1]
+    color: !vec [0, 1, 0]
+    target: !ref synth
+    eventName: changeWaveform
+    tags: [cube, material, collider]
+    codes: [!load_file "button.wasm"]
+  - position: !vec [-1.7, 1.75, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.05, 0.05, 0.05]
+    text: "WAVEFORM"
+    fontSize: 20
+    tags: [text]
+  # Attack
+  - position: !vec [-1, 1.5, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.1, 0.1]
+    color: !vec [0, 1, 0]
+    length: 0.3
+    target: !ref synth
+    eventName: setAttack
+    tags: [cube, material, collider]
+    codes: [!load_file "slider.wasm"]
+  - position: !vec [-1.5, 1.55, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.05, 0.05, 0.05]
+    text: "ATTACK"
+    fontSize: 20
+    tags: [text]
+  # Decay
+  - position: !vec [-1, 1.3, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.1, 0.1]
+    color: !vec [0, 1, 0]
+    length: 0.3
+    target: !ref synth
+    eventName: setDecay
+    tags: [cube, material, collider]
+    codes: [!load_file "slider.wasm"]
+  - position: !vec [-1.5, 1.35, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.05, 0.05, 0.05]
+    text: "DECAY"
+    fontSize: 20
+    tags: [text]
+  # Sustain
+  - position: !vec [-1, 1.1, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.1, 0.1]
+    color: !vec [0, 1, 0]
+    length: 0.3
+    target: !ref synth
+    eventName: setSustain
+    tags: [cube, material, collider]
+    codes: [!load_file "slider.wasm"]
+  - position: !vec [-1.5, 1.15, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.05, 0.05, 0.05]
+    text: "SUSTAIN"
+    fontSize: 20
+    tags: [text]
+  # Release
+  - position: !vec [-1, 0.9, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.1, 0.1]
+    color: !vec [0, 1, 0]
+    length: 0.3
+    target: !ref synth
+    eventName: setRelease
+    tags: [cube, material, collider]
+    codes: [!load_file "slider.wasm"]
+  - position: !vec [-1.55, 0.95, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.05, 0.05, 0.05]
+    text: "RELEASE"
+    fontSize: 20
+    tags: [text]
+  # Filter cut-off
+  - position: !vec [-1, 0.7, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.1, 0.1]
+    color: !vec [0, 1, 0]
+    length: 0.3
+    target: !ref synth
+    eventName: setCutOff
+    tags: [cube, material, collider]
+    codes: [!load_file "slider.wasm"]
+  - position: !vec [-1.5, 0.75, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.05, 0.05, 0.05]
+    text: "CUTOFF"
+    fontSize: 20
+    tags: [text]
+  # Filter resonance (Q value)
+  - position: !vec [-1, 0.5, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.1, 0.1, 0.1]
+    color: !vec [0, 1, 0]
+    length: 0.3
+    target: !ref synth
+    eventName: setResonance
+    tags: [cube, material, collider]
+    codes: [!load_file "slider.wasm"]
+  - position: !vec [-1.7, 0.55, 1.5]
+    rotation: !euler [0, 0, 0]
+    scale: !vec [0.05, 0.05, 0.05]
+    text: "RESONANCE"
+    fontSize: 20
+    tags: [text]
